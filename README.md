@@ -9,4 +9,4 @@ since it returns information about all requested files/directories.
 ##Running locally
 
 To install this package locally, simply run `npm install` in the project root.
-To run this project, run `node index.js`.
+To run this project, run `node index.js` and navigate to `localhost:8000`.
