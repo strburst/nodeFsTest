@@ -2,6 +2,7 @@ var http = require('http')
 var fs   = require('fs')
 var url  = require('url');
 var mime = require('mime');
+var port = process.env.PORT || 8000;
 
 function urlToPath(urlStr) {
   var path = url.parse(urlStr).pathname;
@@ -52,4 +53,4 @@ var server = http.createServer(function(request, response) {
 
 });
 
-server.listen(80);
+server.listen(port);
