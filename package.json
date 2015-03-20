@@ -2,6 +2,7 @@
     "name": "file-system-test-app",
     "version": "0.1.0",
     "description": "A test file-server application",
+    "license": "MIT",
     "main": "index.js",
     "scripts": {
         "start": "node index.js"
