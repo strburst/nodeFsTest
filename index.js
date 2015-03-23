@@ -5,7 +5,8 @@ var mime = require('mime');  // MIME-lookup library
 var port = process.env.PORT || 8000;
 
 /**
- * Convert a url to a path on the filesystem
+ * Convert a url to a path on the filesystem.
+ * @param {urlStr} String with the requested url
  */
 function urlToPath(urlStr) {
   var path = url.parse(urlStr).pathname;
@@ -18,6 +19,8 @@ var methods = {};
 
 /**
  * Handle an HTTP GET request.
+ * @param {path} The requested path in the file system
+ * @param {respond} Callback to send response to
  */
 methods.GET = function(path, respond) {
   console.log("GET " + path);
