@@ -10,9 +10,12 @@ var port = process.env.PORT || 8000;
  */
 function urlToPath(urlStr) {
   var path = url.parse(urlStr).pathname;
-  return decodeURIComponent(path);  // relative to root
-  // return '.' + decodeURIComponent(path); // relative to pwd
+  // return decodeURIComponent(path);  // relative to root
+  return '.' + decodeURIComponent(path); // relative to pwd
 }
+
+var htmlHeader = fs.readFileSync('commonHeader.html');
+var htmlFooter = fs.readFileSync('commonFooter.html');
 
 // Hold HTTP request handling functions for different request methods
 var methods = {};
@@ -36,10 +39,12 @@ methods.GET = function(path, respond) {
         if (error) {
           respond(500, 'Internal server error: ' + error.toString());
         } else {
-          respond(200, files.join('\n'));
+          respond(200, htmlHeader + 'var files = '  + JSON.stringify(files) +
+            '\n' + htmlFooter, 'text/html');
         }
       });
     } else {
+      // respond with the file data
       respond(200, fs.createReadStream(path), mime.lookup(path));
     }
   })
