@@ -2,20 +2,25 @@ var http = require('http');  // http api
 var fs   = require('fs');    // file-system api
 var url  = require('url');   // url-parsing library
 var mime = require('mime');  // MIME-lookup library
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 8000;         // port to listen on
+var absPath = process.env.ABSPATH || true;   // view whole file system?
 
 /**
  * Convert a url to a path on the filesystem.
  * @param {urlStr} String with the requested url
  */
 function urlToPath(urlStr) {
-  var path = url.parse(urlStr).pathname;
-  // return decodeURIComponent(path);  // relative to root
-  return '.' + decodeURIComponent(path); // relative to pwd
+  var path = decodeURIComponent(url.parse(urlStr).pathname);
+  if (absPath) {
+    return path;      // relative to root
+  } else {
+    return '.' + path; // relative to pwd
+  }
 }
 
 var htmlHeader = fs.readFileSync('commonHeader.html');
-var htmlFooter = fs.readFileSync('commonFooter.html');
+var htmlFooter = fs.readFileSync('local.js') +
+                 fs.readFileSync('commonFooter.html');
 
 // Hold HTTP request handling functions for different request methods
 var methods = {};
@@ -40,7 +45,7 @@ methods.GET = function(path, respond) {
           respond(500, 'Internal server error: ' + error.toString());
         } else {
           respond(200, htmlHeader + 'var files = '  + JSON.stringify(files) +
-            '\n' + htmlFooter, 'text/html');
+              '\n' + htmlFooter, 'text/html');
         }
       });
     } else {
