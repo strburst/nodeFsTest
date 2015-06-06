@@ -4,6 +4,7 @@
   "description": "A test file-server application",
   "license": "MIT",
   "main": "index.js",
+  "repository": "strburst/nodeFsTest",
   "scripts": {
     "start": "node index.js"
   },
